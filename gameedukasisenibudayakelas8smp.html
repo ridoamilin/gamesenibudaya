@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Petualangan Panggung Teater - Seni Budaya Kelas 8</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        theater: {
+                            primary: '#7c2d12', // Amber 900 / Reddish brown
+                            secondary: '#b45309', // Amber 700
+                            accent: '#f59e0b', // Amber 500
+                            dark: '#1c1917', // Stone 900
+                            light: '#fef3c7', // Amber 100
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .curtain-left {
+            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .curtain-right {
+            transition: transform 1.5s cubic-bezier(0.77, 0, 0.175, 1);
+        }
+        .stage-glow {
+            box-shadow: inset 0 0 50px rgba(245, 158, 11, 0.4), 0 0 20px rgba(124, 45, 18, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-stone-900 text-stone-100 font-sans h-full flex flex-col justify-between selection:bg-amber-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="bg-stone-950 border-b border-amber-900/50 py-4 px-6 shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-amber-700 text-amber-100 p-2.5 rounded-xl shadow-lg border border-amber-500/30">
+                    <i class="fa-solid fa-masks-theater text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-amber-400 tracking-wide">Panggung Teater Kelas 8</h1>
+                    <p class="text-xs text-stone-400">Materi Seni Budaya: Seni Peran & Pementasan</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="bg-stone-900 border border-stone-800 px-3.5 py-1.5 rounded-full flex items-center space-x-2 text-sm shadow-inner">
+                    <i class="fa-solid fa-star text-amber-400"></i>
+                    <span class="text-stone-300">Skor: <strong id="score-display" class="text-amber-400">0</strong></span>
+                </div>
+                <button onclick="openInfoModal()" class="bg-stone-800 hover:bg-stone-700 text-stone-300 px-3 py-1.5 rounded-lg text-sm transition border border-stone-700 flex items-center space-x-1">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <span class="hidden sm:inline">Panduan</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow flex items-center justify-center p-4 md:p-6 overflow-y-auto">
+        <div class="w-full max-w-4xl">
+
+            <!-- HOME / MENU SCREEN -->
+            <div id="screen-home" class="bg-stone-950/90 border border-amber-900/40 rounded-3xl p-6 md:p-10 shadow-2xl text-center backdrop-blur-md relative overflow-hidden">
+                <!-- Background Decoration Elements -->
+                <div class="absolute -top-12 -left-12 w-48 h-48 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-12 -right-12 w-48 h-48 bg-red-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="inline-block p-4 bg-amber-950/60 border border-amber-700/50 rounded-2xl mb-6 shadow-inner text-amber-400 animate-bounce">
+                    <i class="fa-solid fa-clapperboard text-4xl md:text-5xl"></i>
+                </div>
+
+                <h2 class="text-2xl md:text-4xl font-extrabold text-white mb-3">Selamat Datang di Dunia Teater!</h2>
+                <p class="text-stone-300 max-w-xl mx-auto text-sm md:text-base mb-8 leading-relaxed">
+                    Uji pemahamanmu tentang seni peran, teknik vokal, olah tubuh, tata artistik, dan pementasan teater tradisional maupun modern khusus tingkat SMP Kelas 8.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+                    <div class="bg-stone-900/80 border border-stone-800 p-4 rounded-2xl text-left hover:border-amber-600/50 transition">
+                        <div class="text-amber-400 font-bold mb-1 flex items-center space-x-2">
+                            <i class="fa-solid fa-puzzle-piece"></i>
+                            <span>1. Kuis Teater</span>
+                        </div>
+                        <p class="text-xs text-stone-400">Jawab pertanyaan seputar teknik dasar pemeranan dan unsur teater.</p>
+                    </div>
+                    <div class="bg-stone-900/80 border border-stone-800 p-4 rounded-2xl text-left hover:border-amber-600/50 transition">
+                        <div class="text-amber-400 font-bold mb-1 flex items-center space-x-2">
+                            <i class="fa-solid fa-people-arrows"></i>
+                            <span>2. Simulasi Sutradara</span>
+                        </div>
+                        <p class="text-xs text-stone-400">Atur posisi pemain, tata cahaya, dan properti di panggung pertunjukan.</p>
+                    </div>
+                    <div class="bg-stone-900/80 border border-stone-800 p-4 rounded-2xl text-left hover:border-amber-600/50 transition">
+                        <div class="text-amber-400 font-bold mb-1 flex items-center space-x-2">
+                            <i class="fa-solid fa-trophy"></i>
+                            <span>3. Evaluasi Akhir</span>
+                        </div>
+                        <p class="text-xs text-stone-400">Dapatkan sertifikat kelulusan sutradara muda setelah menyelesaikan tantangan.</p>
+                    </div>
+                </div>
+
+                <button onclick="startGameMode(1)" class="bg-gradient-to-r from-amber-600 to-amber-700 hover:from-amber-500 hover:to-amber-600 text-stone-950 font-bold py-3.5 px-8 rounded-xl shadow-lg shadow-amber-900/30 transition transform hover:-translate-y-0.5 active:translate-y-0 text-base md:text-lg flex items-center justify-center space-x-3 mx-auto">
+                    <span class="text-white">Mulai Tantangan Teater</span>
+                    <i class="fa-solid fa-arrow-right text-white"></i>
+                </button>
+            </div>
+
+            <!-- STAGE / QUIZ SCREEN (Hidden initially) -->
+            <div id="screen-quiz" class="hidden bg-stone-950/95 border border-amber-900/40 rounded-3xl p-6 md:p-8 shadow-2xl relative overflow-hidden">
+                <!-- Quiz Progress Bar -->
+                <div class="flex justify-between items-center mb-6 text-xs text-stone-400 border-b border-stone-800 pb-3">
+                    <span id="quiz-progress-text" class="font-medium text-amber-400">Pertanyaan 1 dari 10</span>
+                    <span id="quiz-category-tag" class="bg-amber-950/80 text-amber-300 px-2.5 py-1 rounded-md border border-amber-800/60 font-medium">Seni Peran</span>
+                </div>
+
+                <!-- Question Box -->
+                <div class="mb-6">
+                    <h3 id="question-text" class="text-lg md:text-xl font-semibold text-white leading-snug">
+                        <!-- Pertanyaan dimasukkan via JS -->
+                    </h3>
+                </div>
+
+                <!-- Options List -->
+                <div id="options-container" class="space-y-3 mb-6">
+                    <!-- Opsi jawaban via JS -->
+                </div>
+
+                <!-- Feedback & Next Button -->
+                <div id="feedback-container" class="hidden flex flex-col sm:flex-row items-center justify-between bg-stone-900/90 border border-stone-800 p-4 rounded-2xl gap-4">
+                    <div id="feedback-text" class="text-sm font-medium text-stone-200">
+                        <!-- Umpan balik -->
+                    </div>
+                    <button onclick="nextQuestion()" class="w-full sm:w-auto bg-amber-600 hover:bg-amber-500 text-stone-950 font-bold py-2.5 px-6 rounded-xl transition shadow text-sm whitespace-nowrap text-white">
+                        Lanjut <i class="fa-solid fa-chevron-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- MINI SIMULATOR SCREEN: SUTRADARA PANGGUNG -->
+            <div id="screen-simulator" class="hidden bg-stone-950/95 border border-amber-900/40 rounded-3xl p-6 md:p-8 shadow-2xl relative">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 border-b border-stone-800 pb-3 gap-2">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                            <i class="fa-solid fa-masks-theater text-amber-500"></i>
+                            <span>Simulasi Panggung Pementasan</span>
+                        </h3>
+                        <p class="text-xs text-stone-400">Posisikan elemen pementasan sesuai skenario cerita teater!</p>
+                    </div>
+                    <div class="bg-amber-950/80 text-amber-300 text-xs px-3 py-1.5 rounded-lg border border-amber-800/60">
+                        Skenario: <span id="scenario-title" class="font-bold">Drama Istana</span>
+                    </div>
+                </div>
+
+                <!-- Skenario Deskripsi -->
+                <div id="scenario-desc" class="bg-stone-900/80 border border-stone-800 p-3.5 rounded-xl text-xs md:text-sm text-stone-300 mb-4">
+                    <!-- Deskripsi skenario -->
+                </div>
+
+                <!-- Panggung Visual -->
+                <div id="stage-area" class="relative w-full h-56 md:h-64 bg-gradient-to-b from-stone-900 to-amber-950/40 border-2 border-dashed border-amber-800/50 rounded-2xl overflow-hidden stage-glow mb-4 flex items-center justify-center">
+                    <!-- Background panggung -->
+                    <div class="absolute inset-0 opacity-20 bg-[radial-gradient(#f59e0b_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                    
+                    <!-- Tempat peletakan aset / aktor -->
+                    <div id="stage-dropzone" class="absolute inset-4 flex items-center justify-around">
+                        <!-- Elemen yang diletakkan muncul di sini -->
+                    </div>
+                    <div id="stage-placeholder-text" class="absolute text-stone-500 text-xs md:text-sm pointer-events-none text-center px-4">
+                        Seret atau pilih elemen di bawah untuk menempatkannya di atas panggung.
+                    </div>
+                </div>
+
+                <!-- Pilihan Aset untuk Ditempatkan -->
+                <div class="mb-4">
+                    <p class="text-xs font-medium text-stone-400 mb-2">Pilih Elemen Pendukung Pementasan:</p>
+                    <div id="asset-options" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                        <!-- Opsi aset -->
+                    </div>
+                </div>
+
+                <!-- Aksi Selesai Skenario -->
+                <div class="flex justify-end">
+                    <button onclick="checkSimulatorStage()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold py-2.5 px-6 rounded-xl text-sm transition shadow">
+                        Periksa Tata Panggung <i class="fa-solid fa-check ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- RESULT SCREEN -->
+            <div id="screen-result" class="hidden bg-stone-950/95 border border-amber-900/40 rounded-3xl p-6 md:p-10 shadow-2xl text-center relative overflow-hidden">
+                <div class="inline-block p-4 bg-amber-950/80 border border-amber-700/50 rounded-full mb-6 text-amber-400 shadow-lg">
+                    <i class="fa-solid fa-award text-4xl md:text-5xl"></i>
+                </div>
+                <h3 class="text-2xl md:text-3xl font-bold text-white mb-2">Pementasan Selesai!</h3>
+                <p class="text-stone-300 text-sm md:text-base mb-6">Hebat! Kamu telah menyelesaikan seluruh rangkaian tantangan seni teater kelas 8.</p>
+
+                <div class="bg-stone-900 border border-stone-800 p-6 rounded-2xl max-w-sm mx-auto mb-6 shadow-inner">
+                    <p class="text-xs text-stone-400 mb-1">Skor Akhir Kamu</p>
+                    <div id="final-score" class="text-4xl font-extrabold text-amber-400 mb-2">0</div>
+                    <p id="final-message" class="text-xs text-stone-300 font-medium">Predikat: Sutradara Muda Berbakat</p>
+                </div>
+
+                <div class="flex flex-col sm:flex-row justify-center gap-3">
+                    <button onclick="restartGame()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold py-3 px-6 rounded-xl text-sm transition shadow flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-rotate-right"></i>
+                        <span>Mainkan Lagi</span>
+                    </button>
+                    <button onclick="openInfoModal()" class="bg-stone-800 hover:bg-stone-700 text-stone-300 font-medium py-3 px-6 rounded-xl text-sm transition border border-stone-700 flex items-center justify-center space-x-2">
+                        <i class="fa-solid fa-book"></i>
+                        <span>Ringkasan Materi Teater</span>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer Simple -->
+    <footer class="bg-stone-950 border-t border-stone-900 py-3 text-center text-xs text-stone-500">
+        Mata Pelajaran Seni Budaya Kelas 8 Kurikulum Merdeka / K-13 &bull; Materi Seni Teater
+    </footer>
+
+    <!-- MODAL INFORMASI / MATERI TEATER -->
+    <div id="info-modal" class="fixed inset-0 bg-stone-950/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-stone-900 border border-stone-800 rounded-3xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 md:p-8 shadow-2xl relative">
+            <div class="flex justify-between items-center mb-4 border-b border-stone-800 pb-3">
+                <h3 class="text-lg font-bold text-amber-400 flex items-center space-x-2">
+                    <i class="fa-solid fa-book-open"></i>
+                    <span>Ringkasan Materi Seni Teater Kelas 8</span>
+                </h3>
+                <button onclick="closeInfoModal()" class="text-stone-400 hover:text-white text-lg p-1">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="space-y-4 text-xs md:text-sm text-stone-300 leading-relaxed">
+                <div>
+                    <h4 class="font-bold text-amber-400 mb-1">1. Pengertian Seni Teater</h4>
+                    <p>Teater adalah seni pertunjukan lakon (drama) yang dipentaskan di atas panggung di hadapan penonton, mencakup unsur lakon, sutradara, aktor, panggung, dan penonton.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold text-amber-400 mb-1">2. Teknik Dasar Pemeranan (Akting)</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>Olah Tubuh:</strong> Latihan kelenturan, kekuatan, dan ketahanan fisik penjiwaan karakter.</li>
+                        <li><strong>Olah Suara (Vokal):</strong> Latihan artikulasi, intonasi, dinamika, dan tempo bicara agar suara terdengar jelas ke penonton.</li>
+                        <li><strong>Olah Rasa:</strong> Latihan konsentrasi, imajinasi, dan penghayatan emosi tokoh.</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold text-amber-400 mb-1">3. Unsur Pementasan Teater</h4>
+                    <ul class="list-disc pl-5 space-y-1">
+                        <li><strong>Naskah / Lakon:</strong> Sumber cerita atau alur yang dimainkan.</li>
+                        <li><strong>Sutradara:</strong> Pemimpin pementasan yang mengatur keseluruhan jalannya pementasan.</li>
+                        <li><strong>Aktor:</strong> Tokoh yang membawakan peran di atas panggung.</li>
+                        <li><strong>Tata Artistik:</strong> Meliputi tata panggung (scenery), tata lampu (lighting), tata busana (kostum), dan tata rias (makeup).</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mt-6 text-right">
+                <button onclick="closeInfoModal()" class="bg-amber-600 hover:bg-amber-500 text-white font-bold py-2 px-5 rounded-xl text-xs transition">
+                    Tutup Panduan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFIKASI KUSTOM -->
+    <div id="toast" class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-stone-900 border border-stone-700 text-white px-4 py-2.5 rounded-xl shadow-2xl text-xs md:text-sm z-50 hidden transition-all duration-300 flex items-center space-x-2">
+        <i id="toast-icon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toast-message">Pesan notifikasi</span>
+    </div>
+
+    <!-- SCRIPT GAME LOGIC -->
+    <script>
+        // Bank Soal Kelas 8 Seni Budaya - Materi Teater
+        const quizQuestions = [
+            {
+                category: "Seni Peran",
+                question: "Latihan yang bertujuan untuk melatih kelenturan otot, ketahanan fisik, dan kepekaan gerak tubuh aktor disebut...",
+                options: [
+                    "Olah Suara",
+                    "Olah Tubuh",
+                    "Olah Rasa",
+                    "Tata Rias"
+                ],
+                answer: 1,
+                explanation: "Olah tubuh adalah latihan dasar agar aktor menguasai anggota tubuhnya di atas panggung."
+            },
+            {
+                category: "Unsur Teater",
+                question: "Orang yang bertanggung jawab memimpin, mengatur konsep, dan mengarahkan jalannya pementasan teater adalah...",
+                options: [
+                    "Aktor",
+                    "Penulis Naskah",
+                    "Sutradara",
+                    "Produser"
+                ],
+                answer: 2,
+                explanation: "Sutradara adalah pemimpin artistik yang mengarahkan pemain dan seluruh kru pementasan."
+            },
+            {
+                category: "Teknik Vokal",
+                question: "Kejelasan pengucapan kata-kata oleh seorang aktor di atas panggung agar terdengar jelas oleh penonton disebut...",
+                options: [
+                    "Intonasi",
+                    "Artikulasi",
+                    "Tempo",
+                    "Dinamika"
+                ],
+                answer: 1,
+                explanation: "Artikulasi adalah kejelasan dalam melafalkan setiap huruf dan kata."
+            },
+            {
+                category: "Tata Artistik",
+                question: "Penataan lampu di atas panggung untuk menciptakan suasana (pagi, malam, sedih, tegang) disebut...",
+                options: [
+                    "Tata Rias",
+                    "Tata Busana",
+                    "Tata Lampu (Lighting)",
+                    "Tata Suara"
+                ],
+                answer: 2,
+                explanation: "Tata lampu atau lighting berfungsi memperkuat suasana emosional dan fokus pementasan."
+            },
+            {
+                category: "Seni Peran",
+                question: "Latihan berkonsentrasi dan menghayati perasaan atau emosi tokoh yang diperankan termasuk dalam latihan...",
+                options: [
+                    "Olah Rasa",
+                    "Olah Vokal",
+                    "Olah Panggung",
+                    "Olah Fisik"
+                ],
+                answer: 0,
+                explanation: "Olah rasa melatih kepekaan emosi, imajinasi, dan konsentrasi jiwa aktor."
+            },
+            {
+                category: "Jenis Teater",
+                question: "Teater yang bersumber dari tradisi masyarakat suatu daerah secara turun-temurun dan bersifat lokal disebut...",
+                options: [
+                    "Teater Modern",
+                    "Teater Kontemporer",
+                    "Teater Tradisional",
+                    "Teater Musikal Barat"
+                ],
+                answer: 2,
+                explanation: "Teater tradisional lahir dan berkembang di masyarakat lokal nusantara (contoh: Lenong, Ludruk, Ketoprak)."
+            },
+            {
+                category: "Unsur Teater",
+                question: "Naskah tertulis yang berisi dialog, alur cerita, dan petunjuk laku di atas panggung dinamakan...",
+                options: [
+                    "Sinopsis",
+                    "Lakon / Naskah Drama",
+                    "Sketsa",
+                    "Skenario Film"
+                ],
+                answer: 1,
+                explanation: "Lakon atau naskah drama adalah bahan dasar tertulis yang akan dipentaskan."
+            },
+            {
+                category: "Tata Artistik",
+                question: "Pakaian dan aksesoris yang dikenakan oleh aktor di atas panggung untuk memperkuat karakter tokoh disebut...",
+                options: [
+                    "Properti",
+                    "Kostum (Tata Busana)",
+                    "Set Panggung",
+                    "Dekorasi"
+                ],
+                answer: 1,
+                explanation: "Kostum atau tata busana memperjelas identitas sosial, usia, dan profesi tokoh."
+            }
+        ];
+
+        // Skenario Simulasi Panggung
+        const simulatorScenarios = [
+            {
+                title: "Adegan Kerajaan Istana",
+                desc: "Raja sedang duduk di singgasana megah menyambut utusan kerajaan lain. Pilih elemen dekorasi panggung yang paling sesuai!",
+                requiredAssets: ["Singgasana Raja", "Lampu Hangat Istana"],
+                availableAssets: [
+                    { id: "Singgasana Raja", name: "Singgasana Raja", icon: "fa-chess-rook", correct: true },
+                    { id: "Pohon Rimba", name: "Pohon Rimba", icon: "fa-tree", correct: false },
+                    { id: "Lampu Hangat Istana", name: "Lampu Hangat", icon: "fa-lightbulb", correct: true },
+                    { id: "Api Unggun", name: "Api Unggun", icon: "fa-fire", correct: false }
+                ]
+            }
+        ];
+
+        let currentMode = 'quiz'; // 'quiz' or 'simulator'
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedOptionIndex = null;
+        let placedAssets = [];
+
+        // DOM Elements
+        const screenHome = document.getElementById('screen-home');
+        const screenQuiz = document.getElementById('screen-quiz');
+        const screenSimulator = document.getElementById('screen-simulator');
+        const screenResult = document.getElementById('screen-result');
+        const scoreDisplay = document.getElementById('score-display');
+        const questionText = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        const feedbackContainer = document.getElementById('feedback-container');
+        const feedbackText = document.getElementById('feedback-text');
+        const quizProgressText = document.getElementById('quiz-progress-text');
+        const quizCategoryTag = document.getElementById('quiz-category-tag');
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            const toastIcon = document.getElementById('toast-icon');
+            
+            toastMessage.textContent = message;
+            if(type === 'success') {
+                toastIcon.className = "fa-solid fa-circle-check text-emerald-400";
+            } else {
+                toastIcon.className = "fa-solid fa-triangle-exclamation text-amber-400";
+            }
+            
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        function openInfoModal() {
+            document.getElementById('info-modal').classList.remove('hidden');
+        }
+
+        function closeInfoModal() {
+            document.getElementById('info-modal').classList.add('hidden');
+        }
+
+        function startGameMode() {
+            screenHome.classList.add('hidden');
+            screenQuiz.classList.remove('hidden');
+            currentQuestionIndex = 0;
+            score = 0;
+            scoreDisplay.textContent = score;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            resetQuestionState();
+            const q = quizQuestions[currentQuestionIndex];
+            quizProgressText.textContent = `Pertanyaan ${currentQuestionIndex + 1} dari ${quizQuestions.length}`;
+            quizCategoryTag.textContent = q.category;
+            questionText.textContent = q.question;
+
+            optionsContainer.innerHTML = '';
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full text-left bg-stone-900/90 hover:bg-stone-800 border border-stone-800 hover:border-amber-600/50 p-4 rounded-xl text-sm md:text-base text-stone-200 transition flex items-center justify-between group";
+                btn.innerHTML = `
+                    <span><strong class="text-amber-500 mr-2">${String.fromCharCode(65 + idx)}.</strong> ${opt}</span>
+                    <i class="fa-solid fa-circle text-stone-700 text-xs group-hover:text-amber-500 transition"></i>
+                `;
+                btn.onclick = () => selectOption(idx);
+                optionsContainer.appendChild(btn);
+            });
+        }
+
+        function resetQuestionState() {
+            selectedOptionIndex = null;
+            feedbackContainer.classList.add('hidden');
+        }
+
+        function selectOption(idx) {
+            const q = quizQuestions[currentQuestionIndex];
+            selectedOptionIndex = idx;
+            const buttons = optionsContainer.children;
+
+            // Highlight selected
+            for (let i = 0; i < buttons.length; i++) {
+                buttons[i].classList.remove('border-amber-500', 'bg-amber-950/30', 'border-emerald-500', 'bg-emerald-950/30', 'border-rose-500', 'bg-rose-950/30');
+                if (i === idx) {
+                    if (idx === q.answer) {
+                        buttons[i].classList.add('border-emerald-500', 'bg-emerald-950/30');
+                    } else {
+                        buttons[i].classList.add('border-rose-500', 'bg-rose-950/30');
+                    }
+                }
+                if (i === q.answer) {
+                    buttons[i].classList.add('border-emerald-500', 'bg-emerald-950/20');
+                }
+                buttons[i].disabled = true;
+            }
+
+            const isCorrect = (idx === q.answer);
+            if (isCorrect) {
+                score += 15;
+                scoreDisplay.textContent = score;
+                feedbackText.innerHTML = `<strong class="text-emerald-400">Benar!</strong> ${q.explanation}`;
+            } else {
+                feedbackText.innerHTML = `<strong class="text-rose-400">Kurang Tepat.</strong> ${q.explanation}`;
+            }
+
+            feedbackContainer.classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizQuestions.length) {
+                loadQuestion();
+            } else {
+                // Pindah ke tahap Simulasi Sutradara
+                screenQuiz.classList.add('hidden');
+                initSimulator();
+            }
+        }
+
+        // SIMULATOR LOGIC
+        function initSimulator() {
+            screenSimulator.classList.remove('hidden');
+            const scenario = simulatorScenarios[0];
+            document.getElementById('scenario-title').textContent = scenario.title;
+            document.getElementById('scenario-desc').textContent = scenario.desc;
+            
+            placedAssets = [];
+            renderStage();
+            renderAssetOptions();
+        }
+
+        function renderAssetOptions() {
+            const container = document.getElementById('asset-options');
+            container.innerHTML = '';
+            const scenario = simulatorScenarios[0];
+
+            scenario.availableAssets.forEach(asset => {
+                const isPlaced = placedAssets.includes(asset.id);
+                const btn = document.createElement('button');
+                btn.className = `p-3 rounded-xl border text-left flex items-center space-x-3 transition ${isPlaced ? 'bg-amber-950/40 border-amber-600 text-amber-300' : 'bg-stone-900 border-stone-800 hover:border-stone-700 text-stone-300'}`;
+                btn.innerHTML = `
+                    <div class="p-2 bg-stone-800 rounded-lg text-amber-400"><i class="fa-solid ${asset.icon}"></i></div>
+                    <div class="overflow-hidden">
+                        <p class="text-xs font-semibold truncate">${asset.name}</p>
+                        <p class="text-[10px] text-stone-400">${isPlaced ? 'Terpasang' : 'Ketuk pasang'}</p>
+                    </div>
+                `;
+                btn.onclick = () => toggleAssetOnStage(asset.id);
+                container.appendChild(btn);
+            });
+        }
+
+        function toggleAssetOnStage(assetId) {
+            const index = placedAssets.indexOf(assetId);
+            if (index > -1) {
+                placedAssets.splice(index, 1);
+            } else {
+                if(placedAssets.length < 2) {
+                    placedAssets.push(assetId);
+                } else {
+                    showToast("Maksimal 2 elemen pada panggung!", "warning");
+                    return;
+                }
+            }
+            renderStage();
+            renderAssetOptions();
+        }
+
+        function renderStage() {
+            const dropzone = document.getElementById('stage-dropzone');
+            const placeholderText = document.getElementById('stage-placeholder-text');
+            dropzone.innerHTML = '';
+
+            if (placedAssets.length === 0) {
+                placeholderText.classList.remove('hidden');
+            } else {
+                placeholderText.classList.add('hidden');
+                const scenario = simulatorScenarios[0];
+                placedAssets.forEach(id => {
+                    const assetObj = scenario.availableAssets.find(a => a.id === id);
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = "bg-stone-900/90 border border-amber-600/60 px-4 py-3 rounded-xl flex items-center space-x-2 shadow-lg animate-fade-in";
+                    itemDiv.innerHTML = `
+                        <i class="fa-solid ${assetObj.icon} text-amber-400 text-lg"></i>
+                        <span class="text-xs font-bold text-white">${assetObj.name}</span>
+                    `;
+                    dropzone.appendChild(itemDiv);
+                });
+            }
+        }
+
+        function checkSimulatorStage() {
+            const scenario = simulatorScenarios[0];
+            const correctSet = new Set(scenario.requiredAssets);
+            const userSet = new Set(placedAssets);
+
+            let isCorrect = (correctSet.size === userSet.size && [...correctSet].every(val => userSet.has(val)));
+
+            if (isCorrect) {
+                score += 30;
+                scoreDisplay.textContent = score;
+                showToast("Tata panggung berhasil dan sesuai skenario!", "success");
+            } else {
+                score += 10; // Tetap diberikan poin apresiasi
+                scoreDisplay.textContent = score;
+                showToast("Tata panggung kurang tepat, tapi kerja bagus!", "warning");
+            }
+
+            // Pindah ke layar Hasil
+            setTimeout(() => {
+                screenSimulator.classList.add('hidden');
+                showResultScreen();
+            }, 1200);
+        }
+
+        function showResultScreen() {
+            screenResult.classList.remove('hidden');
+            document.getElementById('final-score').textContent = score;
+            const finalMsg = document.getElementById('final-message');
+            
+            if (score >= 120) {
+                finalMsg.textContent = "Predikat: Sutradara Teater Utama ✨ (Sangat Memuaskan)";
+            } else if (score >= 80) {
+                finalMsg.textContent = "Predikat: Aktor Berbakat 🎭 (Memuaskan)";
+            } else {
+                finalMsg.textContent = "Predikat: Kru Teater Pemula 🎬 (Terus Belajar)";
+            }
+        }
+
+        function restartGame() {
+            screenResult.classList.add('hidden');
+            screenHome.classList.remove('hidden');
+            score = 0;
+            scoreDisplay.textContent = score;
+        }
+    </script>
+</body>
+</html>
